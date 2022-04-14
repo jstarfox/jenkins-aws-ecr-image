@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = '375531514388.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd'
-    registryCredential = 'IAM_JORDAN'
+    registryCredential = 'IAM-JORDAN'
     dockerImage = ''
   }
   agent any
@@ -26,7 +26,7 @@ pipeline {
     
     stage('Deploy docker image to AWS ECS container') {
             steps {
-                withAWS(credentials: 'IAM_JORDAN', region: 'us-east-1') {
+                withAWS(credentials: 'IAM-JORDAN', region: 'us-east-1') {
                   sh "chmod +x ./jenkins_ecr.sh"
                   sh "./jenkins_ecr.sh"
                 }

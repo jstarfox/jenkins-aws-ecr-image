@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    registry = '<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/jenkins-cicd'
-    registryCredential = 'IAM_SAA'
+    registry = '375531514388.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd'
+    registryCredential = 'IAM_JORDAN'
     dockerImage = ''
   }
   agent any
@@ -17,7 +17,7 @@ pipeline {
     stage('Push Image to AWS ECR') {
         steps{
             script{
-                docker.withRegistry("https://" + registry, "ecr:<REGION>:" + registryCredential) {
+                docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
                     dockerImage.push()
                 }
             }
@@ -26,7 +26,7 @@ pipeline {
     
     stage('Deploy docker image to AWS ECS container') {
             steps {
-                withAWS(credentials: 'IAM_SAA', region: 'us-east-1') {
+                withAWS(credentials: 'IAM_JORDAN', region: 'us-east-1') {
                   sh "chmod +x ./jenkins_ecr.sh"
                   sh "./jenkins_ecr.sh"
                 }
